@@ -1,1 +1,6 @@
 .idea/
+backend/DB/base.py
+
+Dockerfile
+docker-compose.yml
+
