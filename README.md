@@ -10,7 +10,7 @@
 ## 📌 **기능 (Features)**
 ✅ **RAG 기반 문서 검색** → **요구사항 명세서 (SRS) 및 설계 문서 (SDS) 분석**  
 ✅ **코드 분석** → **파일 및 메소드 단위 결함 탐색**  
-✅ **LLM 기반 결함 예측** → **Mamba-CCL, CodeBERT, SecureBERT 활용**  
+✅ **LLM 기반 결함 예측**
 ✅ **자동 코드 수정** → **AI 기반 코드 수정 및 보안 강화**  
 ✅ **UI 연동** → **PyCharm Git Merge Tool과 유사한 코드 비교 및 수정 반영**  
 ✅ **FastAPI 기반 REST API** → **데이터 저장 및 분석 결과 반환**  
