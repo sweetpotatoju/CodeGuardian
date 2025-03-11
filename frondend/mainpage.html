@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>결함 자동 수정 비교</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding-top: 20px;
+        }
+        h2 { margin-bottom: 20px; }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            width: 90%;
+            height: 80%;
+        }
+        .code-block {
+            width: 48%;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            overflow: auto;
+        }
+        pre { white-space: pre-wrap; word-wrap: break-word; font-size: 14px; margin: 0; }
+        .highlight {
+            background-color: #d7dfff;
+            cursor: pointer;
+            border-radius: 4px;
+            position: relative;
+            display: block;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+        .tooltip, .chatbox {
+            display: none;
+            position: relative;
+            background-color: #333;
+            color: white;
+            padding: 6px;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-top: 5px;
+            z-index: 10;
+        }
+        .chatbox {
+            background-color: #fff;
+            color: #333;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .chatbox textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            resize: none;
+            overflow-y: hidden;
+            min-height: 40px;
+        }
+        .chatbox button {
+            margin-top: 5px;
+            padding: 5px 10px;
+        }
+        .chat-history {
+            margin-top: 10px;
+            padding: 5px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            max-height: 100px;
+            overflow-y: auto;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>결함 자동 수정 비교</h2>
+<div class="container">
+    <div class="code-block">
+        <h3>결함 수정 전</h3>
+        <pre>
+function add(a, b) {
+    return a - b;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+function subtract(a, b) {
+    return a / b;
+}
+        </pre>
+    </div>
+
+    <div class="code-block">
+        <h3>결함 수정 후</h3>
+        <pre>
+function add(a, b) {
+<span class="highlight">
+    return a + b;
+    <div class="tooltip">수정 이유: 잘못된 연산자(-)를 (+)로 변경하였습니다.</div>
+    <div class="chatbox">
+        <div class="chatHistory"></div>
+        <textarea class="userQuestion" placeholder="추가 질문 입력"></textarea>
+        <button class="questionBtn">질문하기</button>
+    </div>
+</span>
+
+function multiply(a, b) {
+    return a * b;
+}
+
+function subtract(a, b) {
+<span class="highlight">    return a - b;
+    <div class="tooltip">수정 이유: 잘못된 연산자(/)를 (-)로 변경하였습니다.</div>
+    <div class="chatbox">
+        <div class="chatHistory"></div>
+        <textarea class="userQuestion" placeholder="추가 질문 입력"></textarea>
+        <button class="questionBtn">질문하기</button>
+    </div>
+</span>
+        </pre>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.highlight').forEach(highlight => {
+        highlight.addEventListener('click', (e) => {
+            if (!['BUTTON', 'TEXTAREA'].includes(e.target.tagName)) {
+                const tooltip = highlight.querySelector('.tooltip');
+                const chatbox = highlight.querySelector('.chatbox');
+                const displayStyle = tooltip.style.display === 'block' ? 'none' : 'block';
+                tooltip.style.display = displayStyle;
+                chatbox.style.display = displayStyle;
+            }
+        });
+
+        const button = highlight.querySelector('.questionBtn');
+        const textarea = highlight.querySelector('.userQuestion');
+        const history = highlight.querySelector('.chatHistory');
+
+        button.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const question = textarea.value;
+            const userMsg = document.createElement('div');
+            userMsg.textContent = '사용자: ' + question;
+            const aiMsg = document.createElement('div');
+            aiMsg.textContent = 'AI: 연산자 선택 이유에 대한 상세 설명을 추가로 드립니다.';
+            const chatHistory = highlight.querySelector('.chatHistory');
+            chatHistory.appendChild(userMsg);
+            chatHistory.appendChild(aiMsg);
+            textarea.value = '';
+        });
+
+        textarea.addEventListener('click', (e) => e.stopPropagation());
+    });
+</script>
+
+</body>
+</html>

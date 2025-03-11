@@ -1,5 +1,5 @@
 .idea/
-backend/DB/base.py
+.env
 
 Dockerfile
 docker-compose.yml
